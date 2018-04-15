@@ -1,0 +1,12 @@
+---
+- name: Add ppa:wireshark-dev/stable repository
+  apt_repository: repo=ppa:wireshark-dev/stable
+
+- name: Install wireshark
+  apt: pkg=wireshark
+
+- name: Create group "wireshark"
+  group: name=wireshark
+
+- name: Add user user to group "wireshark"
+  user: name='{{ user|default(ansible_user_id) }}' groups=wireshark append=yes

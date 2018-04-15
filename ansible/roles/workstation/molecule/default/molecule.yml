@@ -1,0 +1,29 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  ssh_connection_options:
+    - -o UserKnownHostsFile=/dev/null
+    - -o ControlMaster=auto
+    - -o ControlPersist=60s
+    - -o IdentitiesOnly=yes
+    - -o StrictHostKeyChecking=no
+    - -o ControlPath=~/.ansible/cp/%r@%h-%p
+lint:
+  name: yamllint
+platforms:
+  - name: ubuntu1604
+    box: ubuntu/xenial64
+    cpus: 4
+    memory: 2048
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+scenario:
+  name: default
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

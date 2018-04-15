@@ -1,0 +1,6 @@
+---
+- name: Add ppa:jonathonf/vim repository
+  apt_repository: repo=ppa:jonathonf/vim
+
+- name: Install vim
+  apt: pkg=vim state=latest

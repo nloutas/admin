@@ -1,0 +1,7 @@
+---
+- name: Install scala
+  apt: pkg=scala state=latest
+
+- name: Install scala-doc
+  apt: pkg=scala-doc state=latest
+

@@ -1,0 +1,34 @@
+---
+- name: Update apt cache
+  apt: update_cache=yes cache_valid_time=300
+
+- name: Install git
+  apt: pkg=git state=latest
+
+- name: Install curl
+  apt: pkg=curl state=latest
+
+- name: Install gradle
+  apt: pkg=gradle state=latest
+
+- name: Install python-pycurl
+  apt: pkg=python-pycurl state=latest
+
+- name: Install lksctp-tools
+  apt: pkg=lksctp-tools state=latest
+
+- name: Install openjdk-8-jdk
+  apt: pkg=openjdk-8-jdk state=latest
+
+- name: Install rustc
+  apt: pkg=rustc state=latest
+
+- import_tasks: scala.yml
+- import_tasks: ansible.yml
+- import_tasks: vim.yml
+- import_tasks: wireshark.yml 
+- import_tasks: meld.yml
+- import_tasks: mysql-workbench.yml
+- import_tasks: brew.yml
+
+

@@ -1,0 +1,5 @@
+---
+- src: gantsign.maven
+  version: 3.5.0
+- src: geerlingguy.mysql
+  version: 2.7.2

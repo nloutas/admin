@@ -1,0 +1,4 @@
+---
+
+- include: firefox.yml
+- include: minecraft.yml

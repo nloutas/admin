@@ -1,0 +1,23 @@
+
+user: nloutas
+
+#Postman vars:
+postman_redis_url: https://dl.pstmn.io/download/latest/linux64
+
+#Virtualbox vars:
+virtualbox_apt_package: virtualbox-5.1
+virtualbox_apt_repository: deb http://download.virtualbox.org/virtualbox/debian xenial contrib
+
+#Vagrant vars:
+vagrant_download_url: https://releases.hashicorp.com/vagrant/1.9.7/vagrant_1.9.7_x86_64.deb
+vagrant_sha256: d5579836c24d95c990aaa0fcd5c700b6a3cfac28d69229867e7cd614b7aecbdd
+
+# MySQL Workbench vars
+mysql_workbench_version: 6.3.9
+
+# Chrome
+chrome_download_url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+# jdk
+jdk8_home: /usr/lib/jvm/java-8-openjdk-amd64
+jdk_version: 1.8

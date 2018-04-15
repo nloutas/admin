@@ -1,0 +1,63 @@
+---
+- name: Set packages download url, destination path and install directory (1/2)
+  set_fact:
+    eclipse_version: "{{eclipse_major}}.{{eclipse_minor}}"
+    file_tar: "eclipse-java-{{eclipse_name}}-R-linux-gtk-x86_64.tar.gz"
+    eclipse_download_base: "{{eclipse_url}}/{{eclipse_name}}/R/"
+
+- name: Set packages download url, destination path and install directory (2/2)
+  set_fact:
+    # in case of returning to original download url instead of using s3 bucket
+    eclipse_download_url: "{{eclipse_download_base}}{{file_tar}}{{eclipse_mirror_param}}"
+    eclipse_package_download_path: "{{ '/tmp/' ~ file_tar }}"
+    eclipse_install_dir: "{{eclipse_installation_directory ~ '-' ~ eclipse_name
+     ~ '-' ~ eclipse_version}}"
+
+- name: Set name of unpacked eclipse directory
+  set_fact:
+    eclipse_unpack_dir: "{{ eclipse_install_dir ~ '/eclipse'}}"
+    eclipse_ini_path: "{{ eclipse_install_dir ~ '/eclipse/eclipse.ini' }}"
+
+- name: Create install directory
+  file:
+    dest: "{{ eclipse_install_dir }}"
+    state: directory
+
+- name: Check if Eclipse is already installed
+  ignore_errors: yes
+  stat:
+    path: "{{ eclipse_ini_path }}"
+  register: eclipse_ini_path_stat
+
+- name: Download and unpack Eclipse archives
+  become: yes
+  unarchive:
+    src: "{{eclipse_download_url}}"
+    dest: '{{ eclipse_install_dir }}'
+    remote_src: true
+  retries: 6
+  when: eclipse_ini_path_stat.stat.exists == False
+
+- name: Prepare ini file
+  lineinfile:
+    path: "{{eclipse_ini_path}}"
+    regexp: "{{item.key}}"
+    line: "{{item.value}}"
+  with_items:
+    - {key: '^-Xms\d+m$', value: '-Xms{{eclipse_Xms}}'}
+    - {key: '^-Xmx\d+m$', value: '-Xmx{{eclipse_Xmx}}'}
+  when: eclipse_ini_path_stat.stat.exists == False
+
+
+- name: initialize menu shortcut
+  template:
+    dest: "/usr/share/applications/eclipse-{{ eclipse_name|lower }}
+    -{{ eclipse_version|lower }}.desktop"
+    group: root
+    mode: 0644
+    owner: root
+    src: "eclipse.desktop"
+  when: eclipse_ini_path_stat.stat.exists == False
+
+# code formatter install instructions in README as there seems to be
+# no way to install it without GUI

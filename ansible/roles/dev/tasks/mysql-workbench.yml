@@ -1,0 +1,11 @@
+---
+- name: Check if MySQL Workbench is installed
+  command: 'dpkg-query -W mysql-workbench-community -f="{{ mysql_workbench_version }}"'
+  register: mysql_workbench_to_be_installed
+  failed_when: mysql_workbench_to_be_installed.rc > 1
+  changed_when: mysql_workbench_to_be_installed.rc == 1
+
+- name: Install MySQL Workbench
+  apt:
+    deb: https://dev.mysql.com/get/Downloads/MySQLGUITools/mysql-workbench-community-{{ mysql_workbench_version }}-1ubuntu{{ ansible_distribution_version }}-amd64.deb
+  when: mysql_workbench_to_be_installed.rc == 1

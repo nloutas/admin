@@ -1,0 +1,4 @@
+---
+- name: Install brew
+  apt: pkg=linuxbrew-wrapper state=latest
+

@@ -1,0 +1,28 @@
+---
+- name: Check whether pip is installed
+  command: "which pip"
+  register: which_pip
+  changed_when: no
+  ignore_errors: yes
+- name: Install pip
+  shell: curl -fsSL https://bootstrap.pypa.io/get-pip.py | python
+  become: yes
+  when: which_pip.rc != 0
+  args:
+    warn: False
+- block:
+  - name: Update existing pip to latest pip
+    pip:
+      name: pip
+      state: latest
+    ignore_errors: yes
+    register: result_pip_update
+    changed_when: "'Requirement already up-to-date' not in result_pip_update.stdout"
+  - name: Ensure /usr/bin/pip exists. Ansible pip module uses this path as default executable.
+    file:
+      src: /usr/local/bin/pip
+      dest: /usr/bin/pip
+      state: link
+    ignore_errors: yes
+  become: yes
+  when: python_requirements_update_existing_pip | bool

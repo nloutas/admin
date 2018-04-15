@@ -1,0 +1,11 @@
+---
+eclipse_url: "http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release"
+
+eclipse_name: oxygen # neon, mars, luna
+eclipse_major: 4
+eclipse_minor: 7
+eclipse_Xms: 2048m
+eclipse_Xmx: 4096m
+
+eclipse_installation_directory: /opt/eclipse
+eclipse_mirror_param: "&r=1"

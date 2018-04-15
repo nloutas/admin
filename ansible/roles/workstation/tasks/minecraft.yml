@@ -1,0 +1,7 @@
+---
+- name: Add ppa:flexiondotorg/minecraft repository
+  apt_repository: repo=ppa:flexiondotorg/minecraft
+
+- name: Install minecraft-installer
+  apt: pkg=minecraft-installer state=latest
+

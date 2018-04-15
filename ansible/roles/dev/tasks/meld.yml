@@ -1,0 +1,3 @@
+---
+- name: Install Meld Diff Viewer
+  apt: pkg=meld state=latest

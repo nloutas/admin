@@ -1,0 +1,17 @@
+galaxy_info:
+  author: John Freeman
+  description: Ansible role to install the Terminator terminal emulator.
+  company: GantSign Ltd.
+  license: MIT
+  min_ansible_version: 1.9
+  platforms:
+  - name: Ubuntu
+    versions:
+    - trusty
+    - wily
+    - xenial
+  galaxy_tags:
+    - terminator
+    - terminal
+    - console
+dependencies: []

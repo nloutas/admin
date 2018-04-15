@@ -1,0 +1,15 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Eclipse {{ eclipse_name|capitalize }} {{ eclipse_major|upper }} {{ eclipse_minor|upper }}
+GenericName=Text Editor
+
+Exec={{ eclipse_unpack_dir }}/eclipse %F
+Terminal=false
+Icon={{ eclipse_unpack_dir }}/icon.xpm
+Type=Application
+MimeType=text/plain
+Categories=TextEditor;Development;Utility;IDE;Development
+Comment=Integrated Development Environment
+NoDisplay=false
+StartupNotify=true
+StartupWMClass=Eclipse

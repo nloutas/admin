@@ -1,0 +1,25 @@
+---
+dependencies:
+  - role: dev
+  - role: gantsign.terminator
+  - role: FGtatsuro.vagrant # including FGtatsuro.virtualbox
+  - role: gantsign.postman
+  - role: gantsign.intellij
+    users:
+      - username: '{{ user|default(ansible_user_id) }}'
+        intellij_jdks:
+          - name: '{{ jdk_version }}'
+            home: '{{ ansible_local.java.general.home }}'
+        intellij_default_jdk: '{{ jdk_version }}'
+        intellij_codestyles:
+          - name: GoogleStyle-EMnify
+            url: https://raw.githubusercontent.com/google/styleguide/gh-pages/intellij-java-google-style.xml
+        intellij_active_codestyle: GoogleStyle-EMnify
+        intellij_plugins:
+          - google-java-format
+    
+  - role: eclipse
+  - role: angstwad.docker_ubuntu
+    docker_group_members: ['{{ user|default(ansible_user_id) }}']
+    update_docker_package: yes
+  - role: ypsman.aws-cli
