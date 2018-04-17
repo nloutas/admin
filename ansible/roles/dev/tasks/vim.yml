@@ -1,6 +1,13 @@
 ---
-- name: Add ppa:jonathonf/vim repository
+- name: Add Personal Package Archive for jonathonf/vim repository
   apt_repository: repo=ppa:jonathonf/vim
 
 - name: Install vim
   apt: pkg=vim state=latest
+
+- name: Add Personal Package Archive for neovim-ppa/stable
+  apt_repository: repo=ppa:neovim-ppa/stable
+
+- name: Install neovim
+  apt: pkg=neovim state=latest
+

@@ -26,6 +26,7 @@
 - import_tasks: scala.yml
 - import_tasks: ansible.yml
 - import_tasks: vim.yml
+- import_tasks: fzf.yml
 - import_tasks: wireshark.yml 
 - import_tasks: meld.yml
 - import_tasks: mysql-workbench.yml

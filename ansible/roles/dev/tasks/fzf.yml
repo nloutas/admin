@@ -1,0 +1,12 @@
+---
+- name: clone fzf from github 
+  become: no 
+  git: repo="ssh://git@github.com/junegunn/fzf.git"
+       accept_hostkey=yes
+       dest="{{ '/home/' + user + '/.fzf' }}"
+       update=yes
+
+- name: install fzf
+  become: yes
+  command: "{{ '/home/' + user + '/.fzf/install' }}"
+
