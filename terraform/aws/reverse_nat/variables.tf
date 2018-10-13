@@ -11,7 +11,7 @@ variable "instance" {
 
 variable "application" {
   description = "tag for application"
-  default = "reverse NAT"
+  default = "reverse-nat"
 }
  
 variable "availability_zones" {
