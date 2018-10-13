@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Run as root
+[ "`whoami`" = root ] || exec sudo "$0" "$@"
+
+# dynamic vars
+allowed_cidr_blocks_csv=${nat_allowed_cidr_blocks}
+allowed_cidr_blocks=($${allowed_cidr_blocks_csv//,/ })
+db_private_ip=`dig -4 -q ${db_public_dns} +search +short  | tail -1`
+
+# configure kernel parameter for IPv4 forwarding
+echo 32768 > /proc/sys/net/netfilter/nf_conntrack_max
+sed -i 's/#net.ipv4.ip_forward=./net.ipv4.ip_forward=1/' /etc/sysctl.conf 
+sysctl -p
+
+# iptables rules
+iptables -I FORWARD 1 -j ACCEPT
+
+for db_allowed_cidr in $${allowed_cidr_blocks[@]}; do
+  iptables -t nat -A PREROUTING  --ipv4 -s $${db_allowed_cidr} -p tcp --dport ${db_port} -j DNAT --to-destination $${db_private_ip}:${db_port}
+  iptables -t nat -A POSTROUTING --ipv4 -s $${db_allowed_cidr} -p tcp --dport ${db_port} -d ${vpc_cidr_block} -j MASQUERADE
+done
+
+# packages for iptables rules persistence
+apt-get update
+apt-get install -y debconf-utils
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
+echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
+apt-get install -y iptables-persistent
