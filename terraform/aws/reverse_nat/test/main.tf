@@ -39,3 +39,36 @@ module "nat" {
 
   route53_zone = "${local.route53_zone}"
 }
+
+################# private instance for bastion demo ######################
+
+data "aws_subnet_ids" "dw_private_subnets" {
+  vpc_id = "${local.vpc_id}"
+  filter {
+    name   = "tag:Name"
+    values = ["*private*"]
+  }
+}
+data "aws_subnet" "private_subnet1" {
+  id = "${data.aws_subnet_ids.dw_private_subnets.ids[0]}"
+}
+
+resource "aws_instance" "bastion_demo" {
+  ami                         = "ami-001b0e20a92d8db1e"  # ubuntu-bionic-18.04-amd64-server
+  availability_zone           = "${data.aws_subnet.private_subnet1.availability_zone}"
+  subnet_id                   = "${data.aws_subnet.private_subnet1.id}"
+  private_ip                  = "10.188.2.89"
+  vpc_security_group_ids      = ["${module.nat.bastion_security_group_id}"]
+  associate_public_ip_address = false
+  source_dest_check           = true
+  monitoring                  = false
+  instance_type               = "t2.nano"
+  key_name                    = "terraform"
+
+  tags {
+    Name = "private instance for bastion demo"
+    Stage = "${local.stage}"
+    Instance = "${local.instance}"
+    Application = "${local.application_name}"
+  }
+}
