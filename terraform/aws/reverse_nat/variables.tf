@@ -20,6 +20,8 @@ variable "availability_zones" {
 }
  
 variable "vpc_id" {}
+
+variable "vpc_cidr_block" {}
  
 variable "office_cidr_block" {
   description = "CIDR block to allow access from office" 
