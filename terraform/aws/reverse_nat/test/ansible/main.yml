@@ -1,0 +1,17 @@
+---
+- hosts: dev-nikos-bastion.dev.emnify.io
+  remote_user: ubuntu
+  vars:
+    ansible_ssh_private_key_file: "~/.ec2/terraform.pem"
+    ansible_python_interpreter: "/usr/bin/python3"
+  become: false
+  gather_facts: false
+  tasks:
+    - name: copying PEM file to remote instance
+      become: yes
+      copy:
+        src: ~/.ec2/terraform.pem
+        dest: ~/.ssh/terraform.pem
+        owner: ubuntu
+        group: ubuntu
+        mode: 0600

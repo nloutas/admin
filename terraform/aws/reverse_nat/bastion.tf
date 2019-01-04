@@ -22,6 +22,16 @@ resource "aws_security_group_rule" "bastion_allow_ssh_from_office" {
   description       = "allow SSH access from office"
 }
 
+resource "aws_security_group_rule" "bastion_allow_ssh_from_self" {
+  security_group_id = "${aws_security_group.bastion.id}"
+  type              = "ingress"
+  protocol          = "TCP"
+  from_port         = "22"
+  to_port           = "22"
+  self              = true
+  description       = "allow SSH access from self"
+}
+
 resource "aws_security_group_rule" "bastion_allow_ssh_outbound" {
   security_group_id = "${aws_security_group.bastion.id}"
   type              = "egress"
@@ -79,3 +89,11 @@ resource "aws_instance" "bastion" {
   }
 }
 
+resource "aws_route53_record" "bastion_instance" {
+  zone_id = "${data.aws_route53_zone.net.zone_id}"
+  name    = "${var.stage}-${var.instance}-bastion.${var.route53_zone}"
+  type    = "A"
+  ttl     = 300
+  records = ["${aws_instance.bastion.public_ip}"]
+  depends_on = ["aws_instance.bastion"]
+}
