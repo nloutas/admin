@@ -30,10 +30,6 @@ https://eu-west-1.console.aws.amazon.com/ec2/v2/home?region=eu-west-1#SecurityGr
 
 ------------------------------------------------
 ## CLI verification
-#### DB connectivity 
-- connect from office host to DW redshift 
-
-    psql -h dev-nikos-demo.dev.emnify.io  -U bi  -d dw -p 5439
 
 #### bastion instance 
 - connect to bastion
@@ -49,6 +45,12 @@ https://eu-west-1.console.aws.amazon.com/ec2/v2/home?region=eu-west-1#SecurityGr
     ssh  -i ~/.ssh/terraform.pem  ubuntu@10.188.2.89
 
 #### reverse NAT instance
+
+- connect from office host to DW redshift 
+
+    psql -h dev-nikos-demo.dev.emnify.io  -U bi  -d dw -p 5439
+
+
 - login
 
     ssh  -i ~/.ec2/terraform.pem ubuntu@dev-nikos-demo.dev.emnify.io
