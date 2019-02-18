@@ -31,5 +31,6 @@
 - import_tasks: meld.yml
 - import_tasks: mysql-workbench.yml
 - import_tasks: brew.yml
+- import_tasks: python.yml
 
 

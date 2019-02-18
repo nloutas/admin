@@ -1,0 +1,7 @@
+---
+- name: Add ppa:deadsnakes repo
+  apt_repository: repo=ppa:deadsnakes/ppa
+
+- name: Install python3
+  apt: pkg=python3.[5-8]
+
