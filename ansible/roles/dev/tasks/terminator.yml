@@ -1,0 +1,10 @@
+---
+- name: Add gnome-terminator gtk3 repository
+  apt_repository: repo=ppa:gnome-terminator/nightly-gtk3
+
+- name: Install gnome-terminator
+  apt: pkg=terminator state=latest
+
+- name: Install python-cairo
+  apt: pkg=python-cairo state=latest
+

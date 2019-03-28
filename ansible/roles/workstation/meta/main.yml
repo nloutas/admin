@@ -1,7 +1,6 @@
 ---
 dependencies:
   - role: dev
-  - role: gantsign.terminator
   - role: FGtatsuro.vagrant # including FGtatsuro.virtualbox
   - role: gantsign.postman
   - role: gantsign.intellij
